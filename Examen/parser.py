@@ -25,7 +25,7 @@ def generarCodigo():
   cod += "\r .data \n"
   cod += 'string: .asciiz      "Hello SPIM!"'''
 
-  
+
   file = open('output.s', 'w')
   file.write(cod)
   file.close()
@@ -74,54 +74,113 @@ def analisisSematico():
   #la funcion está en listaGeneral[3][0]
   #print(listaGeneral[3])
   if(listaGeneral[3][0] == "average"):
-    r1 = listaGeneral[3][1][0]
-    r2 = listaGeneral[3][1][3]
-    if(r1 != r2):
-      print("Error! Rango no válido")
-      sys.exit()
-    else:
+    if(len(listaGeneral[3][1]) == 2): #rango o (rango + numeros)
+      r1 = listaGeneral[3][1][0][0]
+      r2 = listaGeneral[3][1][0][3]
+      if(r1 != r2):
+        print("Error! Rango no válido")
+        sys.exit()
+      else:
+        prom = 0
+        n = 0
+        for i in range(int(listaGeneral[3][1][0][1]),int(listaGeneral[3][1][0][4])+1):
+          #print(symbol_table[r1][i])
+          if(type(symbol_table[r1][i]) == type("str")):
+            print("Error! Hay una letra o palabra dentro de ese rango")
+            sys.exit()
+          else:
+            prom += symbol_table[r1][i]
+            n+=1
+        if(len(listaGeneral[3][1][1])>0):
+            l = 0
+            while(l<len(listaGeneral[3][1][1])):
+              prom +=listaGeneral[3][1][1][l]
+              l +=1
+              n +=1
+        prom = prom/(n)
+        print(prom)
+    else: #solo numeros
       prom = 0
       n = 0
-      for i in range(int(listaGeneral[3][1][1]),int(listaGeneral[3][1][4])+1):
-        #print(symbol_table[r1][i])
-        if(type(symbol_table[r1][i]) == type("str")):
-          print("Error! Hay una letra o palabra dentro de ese rango")
-          sys.exit()
-        else:
-          prom += symbol_table[r1][i]
-          n+=1
-      prom = prom/(n)
+      while(n < len(listaGeneral[3][1])):
+        prom += listaGeneral[3][1][n]
+        n +=1
+      prom = prom/n
       print(prom)
+
   else: # sumIF
-    r1 = listaGeneral[3][1][0]
-    r2 = listaGeneral[3][1][3]
-    if(r1 != r2):
-      print("Error! Rango no válido")
-      sys.exit()
-    else:
-      suma = 0
-      for i in range(int(listaGeneral[3][1][1]),int(listaGeneral[3][1][4])+1):
-        #print(symbol_table[r1][i])
-        if(type(symbol_table[r1][i]) == type("str")):
-          print("Error! Hay una letra o palabra dentro de ese rango")
-          sys.exit()
-        else:
-          comparador = listaGeneral[3][2][0]
+    if(len(listaGeneral[3][1]) == 2): #rango o (rango + numeros)
+      r1 = listaGeneral[3][1][0][0]
+      r2 = listaGeneral[3][1][0][3]
+      if(r1 != r2):
+        print("Error! Rango no válido")
+        sys.exit()
+      else:
+        suma = 0
+        for i in range(int(listaGeneral[3][1][0][1]),int(listaGeneral[3][1][0][4])+1):
+          #print(symbol_table[r1][i])
+          if(type(symbol_table[r1][i]) == type("str")):
+            print("Error! Hay una letra o palabra dentro de ese rango")
+            sys.exit()
+          else:
+            comparador = listaGeneral[3][2][0]
+            if(comparador == ">"):
+              if(symbol_table[r1][i] > listaGeneral[3][2][1]):
+                suma += symbol_table[r1][i]
+            elif(comparador == ">="):
+              if(symbol_table[r1][i] >= listaGeneral[3][2][1]):
+                suma += symbol_table[r1][i]
+            elif(comparador == "<"):
+              if(symbol_table[r1][i] < listaGeneral[3][2][1]):
+                suma += symbol_table[r1][i]
+            elif(comparador == "<="):
+              if(symbol_table[r1][i] <= listaGeneral[3][2][1]):
+                suma += symbol_table[r1][i]
+            elif(comparador == "=="):
+              if(symbol_table[r1][i] == listaGeneral[3][2][1]):
+                suma += symbol_table[r1][i]
+        n = 0
+        #print(listaGeneral[3][1][1])
+        while(n < len(listaGeneral[3][1][1])):
           if(comparador == ">"):
-            if(symbol_table[r1][i] > listaGeneral[3][2][1]):
-              suma += symbol_table[r1][i]
+              if(listaGeneral[3][1][1][n] > listaGeneral[3][2][1]):
+                suma += listaGeneral[3][1][1][n]
           elif(comparador == ">="):
-            if(symbol_table[r1][i] >= listaGeneral[3][2][1]):
-              suma += symbol_table[r1][i]
+              if(listaGeneral[3][1][1][n] >= listaGeneral[3][2][1]):
+                suma += listaGeneral[3][1][1][n]
           elif(comparador == "<"):
-            if(symbol_table[r1][i] < listaGeneral[3][2][1]):
-              suma += symbol_table[r1][i]
+              if(listaGeneral[3][1][1][n] < listaGeneral[3][2][1]):  
+                suma += listaGeneral[3][1][1][n]
           elif(comparador == "<="):
-            if(symbol_table[r1][i] <= listaGeneral[3][2][1]):
-              suma += symbol_table[r1][i]
+              if(listaGeneral[3][1][1][n] <= listaGeneral[3][2][1]):
+                suma += listaGeneral[3][1][1][n]
           elif(comparador == "=="):
-            if(symbol_table[r1][i] == listaGeneral[3][2][1]):
-              suma += symbol_table[r1][i]
+              if(listaGeneral[3][1][1][n] == listaGeneral[3][2][1]):
+                suma += listaGeneral[3][1][1][n]
+          n += 1 
+        print(suma)
+    else: #solo numeros
+      comparador = listaGeneral[3][2][0]
+      suma = 0
+      #print(listaGeneral[3][1])
+      n = 0
+      while(n<len(listaGeneral[3][1])):
+        if(comparador == ">"):
+          if(listaGeneral[3][1][n] > listaGeneral[3][2][1]):
+            suma += listaGeneral[3][1][n]
+        elif(comparador == ">="):
+          if(listaGeneral[3][1][n] >= listaGeneral[3][2][1]):
+            suma += listaGeneral[3][1][n]
+        elif(comparador == "<"):
+          if(listaGeneral[3][1][n] < listaGeneral[3][2][1]):  
+            suma += listaGeneral[3][1][n]
+        elif(comparador == "<="):
+          if(listaGeneral[3][1][n] <= listaGeneral[3][2][1]):
+            suma += listaGeneral[3][1][n]
+        elif(comparador == "=="):
+          if(listaGeneral[3][1][n] == listaGeneral[3][2][1]):
+            suma += listaGeneral[3][1][n]
+        n += 1 
       print(suma)
 
 
@@ -188,11 +247,16 @@ def p_params(p):
 
 #-------------------------------------------------------------------------------
 def p_rango(p):
-  ''' rango : ID COLON ID
+  ''' rango : ID COLON ID moreNums
   '''
-  p[1] += p[2]
-  p[1] += p[3]
-  p[0] = p[1]
+  if(p[4] == ''):
+    p[1] += p[2]
+    p[1] += p[3]
+    p[0] = p[1]
+  else:
+    p[1] += p[2]
+    p[1] += p[3]
+    p[0] = [p[1],p[4]]
   return p[0]
 #-------------------------------------------------------------------------------
 def p_nums(p):
@@ -264,7 +328,6 @@ with open(filename, 'r') as f:
   #print("Compiled completed successfully!")
   llenarTabla() 
   analisisSematico()
-  #print("ANALISIS COMPLETADO PERRO\n")
   generarCodigo()
   
 

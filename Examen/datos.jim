@@ -5,5 +5,5 @@ datos {1 2 3 4 5
 	   2.9 y -1 24 p}
 
 funcion {
-	average(D0:D2)
+	sumIf(D0:D2,1,4,5 > 4)
 }
