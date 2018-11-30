@@ -44,8 +44,9 @@ t_MENORIGUAL = '\<='
 t_IGUAL = '\=='
 
 
+
 def t_ID(t):
-    r'[a-zA-Z]+[0-9]* | (-)?[0-9]+(\.[0-9]+)?'
+    r'[a-zA-Z]+[0-9]*'
     if t.value in reserved:
         t.type = reserved[t.value]
     return t

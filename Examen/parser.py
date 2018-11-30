@@ -8,7 +8,9 @@ from lexer import reserved
 
 symbol_table = {}
 lista = []
+listaGeneral = [] 
 
+#-----------------------------------------------------------------
 def llenarTabla():
   global lista
   global symbol_table
@@ -36,8 +38,41 @@ def llenarTabla():
   symbol_table["D"] = lD
   symbol_table["E"] = lE
   
-  print("table filled")
-  #print(symbol_table["A"][4])
+  print("Table Filled")
+  print(symbol_table)
+#-------------------------------------------------------------
+def getType(a):
+  if(type(a) == type(3)):
+    return "int"
+  elif(type(a) == type(3.2)):
+    return "double"
+  elif(type(a) == type("str")):
+    return "string"
+#-------------------------------------------------------------
+def analisiSematico():
+  global listaGeneral
+  global symbol_table
+  #la funcion está en listaGeneral[3][0]
+  print(listaGeneral[3])
+  if(listaGeneral[3][0] == "average"):
+    r1 = listaGeneral[3][1][0]
+    r2 = listaGeneral[3][1][3]
+    if(r1 != r2):
+      print("Error! Rango no válido")
+      sys.exit()
+    else:
+      prom = 0
+      n = 0
+      for i in range(int(listaGeneral[3][1][1]),int(listaGeneral[3][1][4])+1):
+        #print(symbol_table[r1][i])
+        if(type(symbol_table[r1][i]) == type("str")):
+          print("Error! Hay una letra o palabra dentro de ese rango")
+          sys.exit()
+        else:
+          prom += symbol_table[r1][i]
+          n+=1
+      prom = prom/(n)
+      print(prom)
 
 #-------------------------------------------------------------
 def p_begin(p):
@@ -45,13 +80,14 @@ def p_begin(p):
   '''
   #p[3] BloqueDat, p[7] funcion+params, 
   p[0] = ['datos',p[3],p[5],p[7]]
-  global lista
-  #pp.pprint(lista)
+  global listaGeneral
+  listaGeneral = p[0]
+  #pp.pprint(listaGeneral)
   return p[0]
 #-------------------------------------------------------------------
 
 def p_blockData(p):
-  ''' blockData : ID ID ID ID ID ID ID ID ID ID ID ID ID ID ID ID ID ID ID ID ID ID ID ID ID
+  ''' blockData : dato dato dato dato dato dato dato dato dato dato dato dato dato dato dato dato dato dato dato dato dato dato dato dato dato
   '''
   p[0] = [p[1],p[2],p[3],p[4],p[5],p[6],p[7],p[8],p[9],p[10],p[11],p[12],p[13],p[14],p[15],p[16],p[17],p[18],p[19],p[20],p[21],p[22],p[23],p[24],p[25]]
   global lista 
@@ -60,6 +96,16 @@ def p_blockData(p):
   return p[0]
 
 #-------------------------------------------------------------------------------
+
+def p_dato(p):
+  ''' dato : INTEGER
+           | FLOAT
+           | ID
+  '''
+  p[0] = p[1]
+  return p[0]
+#-------------------------------------------------------------------
+
 def p_fn(p):
   ''' fn : avg
          | sum
@@ -159,8 +205,9 @@ with open(filename, 'r') as f:
   input = f.read()
   #pp.pprint(parser.parse(input))
   parser.parse(input)
+  print("Compiled completed successfully!")
   llenarTabla() 
-  #analizar semantica
+  analisiSematico()
   #generar codigo
   #print("ANALISIS COMPLETADO PERRO\n")
 
