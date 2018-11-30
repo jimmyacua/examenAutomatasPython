@@ -103,8 +103,14 @@ def analisisSematico():
       prom = 0
       n = 0
       while(n < len(listaGeneral[3][1])):
-        prom += listaGeneral[3][1][n]
+        if(type(listaGeneral[3][1][n]) == type(1) or type(listaGeneral[3][1][n]) == type(1.1)):
+          prom += listaGeneral[3][1][n]
+        else:
+          r = listaGeneral[3][1][n][0]
+          #print(listaGeneral[3][1])
+          prom += symbol_table[r][int(listaGeneral[3][1][n][1])]
         n +=1
+      #print(prom)
       prom = prom/n
       print(prom)
 
@@ -165,21 +171,39 @@ def analisisSematico():
       #print(listaGeneral[3][1])
       n = 0
       while(n<len(listaGeneral[3][1])):
-        if(comparador == ">"):
-          if(listaGeneral[3][1][n] > listaGeneral[3][2][1]):
-            suma += listaGeneral[3][1][n]
-        elif(comparador == ">="):
-          if(listaGeneral[3][1][n] >= listaGeneral[3][2][1]):
-            suma += listaGeneral[3][1][n]
-        elif(comparador == "<"):
-          if(listaGeneral[3][1][n] < listaGeneral[3][2][1]):  
-            suma += listaGeneral[3][1][n]
-        elif(comparador == "<="):
-          if(listaGeneral[3][1][n] <= listaGeneral[3][2][1]):
-            suma += listaGeneral[3][1][n]
-        elif(comparador == "=="):
-          if(listaGeneral[3][1][n] == listaGeneral[3][2][1]):
-            suma += listaGeneral[3][1][n]
+        if(type(listaGeneral[3][1][n]) == type(3) or type(listaGeneral[3][1][n]) == type(3.3)):
+          if(comparador == ">"):
+            if(listaGeneral[3][1][n] > listaGeneral[3][2][1]):
+              suma += listaGeneral[3][1][n]
+          elif(comparador == ">="):
+            if(listaGeneral[3][1][n] >= listaGeneral[3][2][1]):
+              suma += listaGeneral[3][1][n]
+          elif(comparador == "<"):
+            if(listaGeneral[3][1][n] < listaGeneral[3][2][1]):  
+              suma += listaGeneral[3][1][n]
+          elif(comparador == "<="):
+            if(listaGeneral[3][1][n] <= listaGeneral[3][2][1]):
+              suma += listaGeneral[3][1][n]
+          elif(comparador == "=="):
+            if(listaGeneral[3][1][n] == listaGeneral[3][2][1]):
+              suma += listaGeneral[3][1][n]
+        else:
+          r = listaGeneral[3][1][n][0]
+          if(comparador == ">"):
+            if(symbol_table[r][int(listaGeneral[3][1][n][1])] > listaGeneral[3][2][1]):
+              suma += symbol_table[r][int(listaGeneral[3][1][n][1])]
+          elif(comparador == ">="):
+            if(symbol_table[r][int(listaGeneral[3][1][n][1])] >= listaGeneral[3][2][1]):
+              suma += symbol_table[r][int(listaGeneral[3][1][n][1])]
+          elif(comparador == "<"):
+            if(symbol_table[r][int(listaGeneral[3][1][n][1])] < listaGeneral[3][2][1]):  
+              suma += listaGeneral[3][1][n]
+          elif(comparador == "<="):
+            if(symbol_table[r][int(listaGeneral[3][1][n][1])] <= listaGeneral[3][2][1]):
+              suma += symbol_table[r][int(listaGeneral[3][1][n][1])]
+          elif(comparador == "=="):
+            if(symbol_table[r][int(listaGeneral[3][1][n][1])] == listaGeneral[3][2][1]):
+              suma += symbol_table[r][int(listaGeneral[3][1][n][1])]
         n += 1 
       print(suma)
 
@@ -262,6 +286,7 @@ def p_rango(p):
 def p_nums(p):
   ''' nums : INTEGER moreNums
            | FLOAT moreNums
+           | ID moreNums
   '''
   p[0] = [p[1]] + p[2]
   return p[0]
@@ -270,6 +295,7 @@ def p_nums(p):
 def p_moreNums(p):
   ''' moreNums : COMMA nums
                | epsilon
+               | COMMA ID
   '''
   if(len(p) > 2):
       p[0] = p[2]
