@@ -13,6 +13,7 @@ listaGeneral = []
 
 def generarCodigo():
   cod = "no sé :("
+  #fuente: https://chortle.ccsu.edu/AssemblyTutorial/Chapter-22/ass22_5.html
   '''cod = "\r .text\n"
   cod += "\r.globl  main \n"
   cod += "main:\n"
@@ -24,8 +25,7 @@ def generarCodigo():
   cod += "\r .data \n"
   cod += 'string: .asciiz      "Hello SPIM!"'''
 
-  #fuente: https://chortle.ccsu.edu/AssemblyTutorial/Chapter-22/ass22_5.html
-
+  
   file = open('output.s', 'w')
   file.write(cod)
   file.close()
@@ -231,11 +231,14 @@ def p_comp(p):
   p[0] = p[1]
   return p[0]
 #-------------------------------------------------------------------------------
+  #Tomado del proyecto
 def p_epsilon(p):
   ''' epsilon : '''
   p[0] = ''
   return p[0]
+  #Tomado del proyecto
 #-------------------------------------------------------------------------------
+  #Tomado del proyecto
 def p_error(p):
   if p is not None:
     print("Syntax error at: \"" + str(p.value) + "\" line: " + str(p.lineno))
@@ -244,7 +247,7 @@ def p_error(p):
   else:
     print("End of file")
 
-
+#-----------------------------------------------------------------------------------
 
 start = 'begin'
 
@@ -267,12 +270,3 @@ with open(filename, 'r') as f:
 
 #----------------------------------------------------------------
  # EJECUTAR MARS java -jar Mars.jar 
-
-  ##saber el tipo de variable
-#a = "a"
-#if(type(a) == type(3)):
-#    print ('int')
-#elif(type(a) == type(3.2)):
-#    print ("double")
-#else:
- #   print("nada")

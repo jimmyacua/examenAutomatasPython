@@ -9,11 +9,9 @@ tokens = [  'STRING',
             'RBRACE',
             'COLON',
             'COMMA',
-            'DOT',
             'INTEGER',
             'FLOAT',
             'ID',
-            'newLine',
             'MAYOR',
             'MENOR',
             'MAYORIGUAL',
@@ -36,13 +34,14 @@ t_RBRACE = '\}'
 t_RPAREN = '\)'
 t_COLON = '\:'
 t_COMMA = '\,'
-t_DOT = '\.'
 t_MAYOR = '\>'
 t_MENOR = '\<'
 t_MAYORIGUAL = '\>='
 t_MENORIGUAL = '\<='
 t_IGUAL = '\=='
 
+
+#tomado del proyecto:
 
 
 def t_ID(t):
