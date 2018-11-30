@@ -18,7 +18,4 @@ Notas:
 	mucho copiar todo. Las partes que usé del proyecto están debidamente
 	identificadas con un comentario indicándolo.
 
-5) No pude hacer la última parte de generación de código, por lo que puse un print
-	con el resultado de la función :(
-
-6) Asumí que los rangos para las funciones solo pueden ser de la misma columna, por ejemplo A0:A3, un caso no válido sería: A0:D1.
+5) Asumí que los rangos para las funciones solo pueden ser de la misma columna, por ejemplo A0:A3, un caso no válido sería: A0:D1.

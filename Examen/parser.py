@@ -9,12 +9,14 @@ from lexer import reserved
 symbol_table = {}
 lista = []
 listaGeneral = [] 
+result = 0
 
 
 def generarCodigo():
+  global result
   cod = "no sé :("
   #fuente: https://chortle.ccsu.edu/AssemblyTutorial/Chapter-22/ass22_5.html
-  '''cod = "\r .text\n"
+  cod = "\r .text\n"
   cod += "\r.globl  main \n"
   cod += "main:\n"
   cod += "\r li      $v0,4  \n"
@@ -23,7 +25,7 @@ def generarCodigo():
   cod += "\r li      $v0,10 \n"
   cod += "\r syscall \n"
   cod += "\r .data \n"
-  cod += 'string: .asciiz      "Hello SPIM!"'''
+  cod += 'string: .asciiz      "' + str(result)+ '" \n' 
 
 
   file = open('output.s', 'w')
@@ -71,6 +73,7 @@ def getType(a):
 def analisisSematico():
   global listaGeneral
   global symbol_table
+  global result
   #la funcion está en listaGeneral[3][0]
   #print(listaGeneral[3])
   if(listaGeneral[3][0] == "average"):
@@ -98,7 +101,8 @@ def analisisSematico():
               l +=1
               n +=1
         prom = prom/(n)
-        print(prom)
+        result = prom
+        #print(prom)
     else: #solo numeros
       prom = 0
       n = 0
@@ -112,7 +116,8 @@ def analisisSematico():
         n +=1
       #print(prom)
       prom = prom/n
-      print(prom)
+      #print(prom)
+      result = prom
 
   else: # sumIF
     if(len(listaGeneral[3][1]) == 2): #rango o (rango + numeros)
@@ -164,7 +169,8 @@ def analisisSematico():
               if(listaGeneral[3][1][1][n] == listaGeneral[3][2][1]):
                 suma += listaGeneral[3][1][1][n]
           n += 1 
-        print(suma)
+        #print(suma)
+        result = suma
     else: #solo numeros
       comparador = listaGeneral[3][2][0]
       suma = 0
@@ -205,7 +211,8 @@ def analisisSematico():
             if(symbol_table[r][int(listaGeneral[3][1][n][1])] == listaGeneral[3][2][1]):
               suma += symbol_table[r][int(listaGeneral[3][1][n][1])]
         n += 1 
-      print(suma)
+      #print(suma)
+      result = suma
 
 
 
@@ -355,6 +362,8 @@ with open(filename, 'r') as f:
   llenarTabla() 
   analisisSematico()
   generarCodigo()
+  print("Ejecutar código Mips en Mars.Para abrir Mars use el comando:")
+  print("java -jar Mars.jar")
   
 
 #----------------------------------------------------------------
