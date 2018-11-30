@@ -6,7 +6,8 @@ Carné: B50060
 
 Notas:
 1) Para compilar se debe usar el comando "python3 parser.py datos.jim", solo
-	recibe un archivo que contiene la matriz y la función.
+	recibe un archivo que contiene la matriz y la función, que están dentro del 
+	archivo 'datos.jim'.
 
 2) Las dos funciones que reconoce son average y sumIf.
 
@@ -18,4 +19,6 @@ Notas:
 	identificadas con un comentario indicándolo.
 
 5) No pude hacer la última parte de generación de código, por lo que puse un print
-	con el resultado de la función.
+	con el resultado de la función :(
+
+6) Asumí que los rangos para las funciones solo pueden ser de la misma columna, por ejemplo A0:A3, un caso no válido sería: A0:D1.
