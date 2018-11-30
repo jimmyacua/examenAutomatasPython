@@ -38,8 +38,8 @@ def llenarTabla():
   symbol_table["D"] = lD
   symbol_table["E"] = lE
   
-  print("Table Filled")
-  print(symbol_table)
+  print("Symbol Table Filled")
+  #print(symbol_table)
 #-------------------------------------------------------------
 def getType(a):
   if(type(a) == type(3)):
@@ -49,7 +49,7 @@ def getType(a):
   elif(type(a) == type("str")):
     return "string"
 #-------------------------------------------------------------
-def analisiSematico():
+def analisisSematico():
   global listaGeneral
   global symbol_table
   #la funcion está en listaGeneral[3][0]
@@ -73,6 +73,39 @@ def analisiSematico():
           n+=1
       prom = prom/(n)
       print(prom)
+  else: # sumIF
+    r1 = listaGeneral[3][1][0]
+    r2 = listaGeneral[3][1][3]
+    if(r1 != r2):
+      print("Error! Rango no válido")
+      sys.exit()
+    else:
+      suma = 0
+      for i in range(int(listaGeneral[3][1][1]),int(listaGeneral[3][1][4])+1):
+        #print(symbol_table[r1][i])
+        if(type(symbol_table[r1][i]) == type("str")):
+          print("Error! Hay una letra o palabra dentro de ese rango")
+          sys.exit()
+        else:
+          comparador = listaGeneral[3][2][0]
+          if(comparador == ">"):
+            if(symbol_table[r1][i] > listaGeneral[3][2][1]):
+              suma += symbol_table[r1][i]
+          elif(comparador == ">="):
+            if(symbol_table[r1][i] >= listaGeneral[3][2][1]):
+              suma += symbol_table[r1][i]
+          elif(comparador == "<"):
+            if(symbol_table[r1][i] < listaGeneral[3][2][1]):
+              suma += symbol_table[r1][i]
+          elif(comparador == "<="):
+            if(symbol_table[r1][i] <= listaGeneral[3][2][1]):
+              suma += symbol_table[r1][i]
+          elif(comparador == "=="):
+            if(symbol_table[r1][i] == listaGeneral[3][2][1]):
+              suma += symbol_table[r1][i]
+      print(suma)
+
+
 
 #-------------------------------------------------------------
 def p_begin(p):
@@ -144,7 +177,8 @@ def p_rango(p):
   return p[0]
 #-------------------------------------------------------------------------------
 def p_nums(p):
-  ''' nums : ID moreNums
+  ''' nums : INTEGER moreNums
+           | FLOAT moreNums
   '''
   p[0] = [p[1]] + p[2]
   return p[0]
@@ -162,7 +196,7 @@ def p_moreNums(p):
 
 #-------------------------------------------------------------------------------
 def p_condition(p):
-  ''' condition : comp ID
+  ''' condition : comp INTEGER
   '''
   p[0] = [p[1],p[2]]
   return p[0]
@@ -207,7 +241,7 @@ with open(filename, 'r') as f:
   parser.parse(input)
   print("Compiled completed successfully!")
   llenarTabla() 
-  analisiSematico()
+  analisisSematico()
   #generar codigo
   #print("ANALISIS COMPLETADO PERRO\n")
 
