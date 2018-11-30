@@ -1,9 +1,9 @@
 datos {1 2 3 4 5 
 	   r 7 8 9 D
-	   f v g h 1
+	   f v g 5 1
 	   1 4 6 a w
 	   2.9 y -1 24 p}
 
 funcion {
-	sumIf(A1:D3 > 3)
+	average(D0:D2)
 }

@@ -10,6 +10,25 @@ symbol_table = {}
 lista = []
 listaGeneral = [] 
 
+
+def generarCodigo():
+  cod = "no sé :("
+  '''cod = "\r .text\n"
+  cod += "\r.globl  main \n"
+  cod += "main:\n"
+  cod += "\r li      $v0,4  \n"
+  cod += "\r la      $a0,string\n"
+  cod += "\r syscall \n"
+  cod += "\r li      $v0,10 \n"
+  cod += "\r syscall \n"
+  cod += "\r .data \n"
+  cod += 'string: .asciiz      "Hello SPIM!"'''
+
+  #fuente: https://chortle.ccsu.edu/AssemblyTutorial/Chapter-22/ass22_5.html
+
+  file = open('output.s', 'w')
+  file.write(cod)
+  file.close()
 #-----------------------------------------------------------------
 def llenarTabla():
   global lista
@@ -38,7 +57,7 @@ def llenarTabla():
   symbol_table["D"] = lD
   symbol_table["E"] = lE
   
-  print("Symbol Table Filled")
+  #print("Symbol Table Filled")
   #print(symbol_table)
 #-------------------------------------------------------------
 def getType(a):
@@ -53,7 +72,7 @@ def analisisSematico():
   global listaGeneral
   global symbol_table
   #la funcion está en listaGeneral[3][0]
-  print(listaGeneral[3])
+  #print(listaGeneral[3])
   if(listaGeneral[3][0] == "average"):
     r1 = listaGeneral[3][1][0]
     r2 = listaGeneral[3][1][3]
@@ -239,13 +258,16 @@ with open(filename, 'r') as f:
   input = f.read()
   #pp.pprint(parser.parse(input))
   parser.parse(input)
-  print("Compiled completed successfully!")
+  #print("Compiled completed successfully!")
   llenarTabla() 
   analisisSematico()
-  #generar codigo
   #print("ANALISIS COMPLETADO PERRO\n")
+  generarCodigo()
+  
 
 #----------------------------------------------------------------
+ # EJECUTAR MARS java -jar Mars.jar 
+
   ##saber el tipo de variable
 #a = "a"
 #if(type(a) == type(3)):
